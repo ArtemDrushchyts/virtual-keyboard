@@ -1,0 +1,30 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper {
+    height: max-content;
+}
+
+.textarea {
+    width: 60vw;
+    height: 15vw;
+    border-radius: 15px;
+    padding: 10px;
+    outline: none;
+    resize: none;
+    margin-top: 3vw;
+}
+.keyboard-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 60vw;
+    height: 15vw;
+}
+.key {
+    width: 60px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
