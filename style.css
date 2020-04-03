@@ -8,7 +8,7 @@ body {
 }
 
 .textarea {
-    width: 60vw;
+    width: 644px;
     height: 15vw;
     border-radius: 15px;
     padding: 10px;
@@ -19,12 +19,28 @@ body {
 .keyboard-wrapper {
     display: flex;
     flex-wrap: wrap;
-    width: 60vw;
-    height: 15vw;
+    justify-content: space-around;
+    width: 667px;
+    height: 14vw;
 }
 .key {
-    width: 60px;
+    width: 40px;
     height: 40px;
     border: 1px solid black;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.control {
+    width: 50px;
+}
+.middle {
+    width: 80px;
+}
+.space {
+    width: 290px;
+}
+.delete, .metaleft, .altleft, .altright {
+    width: 40px;
 }
