@@ -44,3 +44,7 @@ body {
 .delete, .metaleft, .altleft, .altright {
     width: 40px;
 }
+.active {
+    border-radius: 25%;
+    background-color: red;
+}
