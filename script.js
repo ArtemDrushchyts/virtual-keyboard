@@ -46,10 +46,21 @@ wrapper.appendChild(keyboard);
 keyboard.classList.add('keyboard-wrapper');
 
 let caps = false;
-let langEn = true;
+let langEn = JSON.parse(localStorage.getItem('langEn'));
 
 function keyboardKey() {
-  const layout = langEn ? (caps ? enCaps : en) : (caps ? ruCaps : ru);
+  let layout = langEn;
+  if (layout) {
+    if (caps) {
+      layout = enCaps;
+    } else {
+      layout = en;
+    }
+  } else if (caps) {
+    layout = ruCaps;
+  } else {
+    layout = ru;
+  }
   keyboard.querySelectorAll('span').forEach((item) => item.remove());
 
   for (let i = 0; i < keysCode.length; i++) {
@@ -67,8 +78,21 @@ function keyboardKey() {
   }
 }
 
-function changeKeyboard () {
-  const layout = langEn ? (caps ? enCaps : en) : (caps ? ruCaps : ru);
+function changeKeyboard() {
+  // const layout = langEn ? (caps ? enCaps : en) : (caps ? ruCaps : ru);
+  let layout = langEn;
+  if (layout) {
+    if (caps) {
+      layout = enCaps;
+    } else {
+      layout = en;
+    }
+  } else if (caps) {
+    layout = ruCaps;
+  } else {
+    layout = ru;
+  }
+
   keyboard.querySelectorAll('span').forEach((item, i) => {
     item.innerText = layout[i];
   });
@@ -114,6 +138,7 @@ document.addEventListener('keydown', (event) => {
       changeKeyboard();
     } else if (event.altKey && event.ctrlKey) {
       langEn = !langEn;
+      localStorage.setItem('langEn', langEn);
       changeKeyboard();
     } else if (event.shiftKey) {
       caps = !caps;
