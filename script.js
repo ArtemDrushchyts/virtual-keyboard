@@ -95,8 +95,10 @@ document.addEventListener('keydown', (event) => {
     if (controlsKey.find((el) => el === event.code)) {
       if (event.code === 'Tab') {
         textarea.value += '   ';
-      } else if (event.code === 'Backspace' || event.code === 'Delete') {
+      } else if (event.code === 'Backspace') {
         textarea.value = textarea.value.slice(0, -1);
+      } else if (event.code === 'Delete') {
+        textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd + 1);
       } else if (event.code === 'Enter') {
         textarea.value += '\n';
       } else if (event.code === 'Space') {
@@ -135,8 +137,11 @@ keyboard.querySelectorAll('.key').forEach((item) => {
         caps = !caps;
         changeKeyboard();
       }
-      if (text === 'Del' || text === 'Backspace') {
+      if (text === 'Backspace') {
         textarea.value = textarea.value.slice(0, -1);
+      }
+      if (text === 'Del') {
+        textarea.setRangeText('', textarea.selectionStart, textarea.selectionEnd + 1);
       }
       if (text === 'Enter') {
         textarea.value += '\n';
