@@ -1,15 +1,19 @@
 import {
-  keysCode, en, enCaps, ru, ruCaps,
+  keysCode, en, enCaps, ru, ruCaps, controlsKey,
 } from './assets/data.js';
 
 const body = document.querySelector('body');
 const wrapper = document.createElement('div');
 const textarea = document.createElement('textarea');
 const keyboard = document.createElement('div');
+const hint = document.createElement('div');
 
 
 body.appendChild(wrapper);
 wrapper.classList.add('wrapper');
+wrapper.appendChild(hint);
+hint.classList.add('hint');
+hint.innerHTML = 'Переключение языка: Ctrl + Alt <br> Клавиатура создана в OS Windows';
 wrapper.appendChild(textarea);
 textarea.classList.add('textarea');
 wrapper.appendChild(keyboard);
@@ -33,7 +37,7 @@ function keyboardKey() {
   }
   keyboard.querySelectorAll('span').forEach((item) => item.remove());
 
-  for (let i = 0; i < keysCode.length; i++) {
+  for (let i = 0; i < keysCode.length; i += 1) {
     let keyClass = '';
     if (keysCode[i] === 'Tab' || keysCode[i] === 'Delete' || keysCode[i] === 'ControlLeft' || keysCode[i] === 'ControlRight' || keysCode[i] === 'MetaLeft' || keysCode[i] === 'AltLeft' || keysCode[i] === 'AltRight') {
       keyClass = `control ${keysCode[i].toLowerCase()}`;
@@ -63,7 +67,8 @@ function changeKeyboard() {
   }
 
   keyboard.querySelectorAll('span').forEach((item, i) => {
-    item.innerText = layout[i];
+    const span = item;
+    span.innerText = layout[i];
   });
 }
 
@@ -85,31 +90,33 @@ document.addEventListener('keyup', (event) => {
 document.addEventListener('keydown', (event) => {
   event.preventDefault();
   if (document.querySelector(`.key[data-code=${event.code}]`)) {
-
     const text = document.querySelector(`.key[data-code=${event.code}]`).innerHTML;
     document.querySelector(`.key[data-code=${event.code}]`).classList.add('active');
-
-    if (event.code === 'Tab') {
-      textarea.value += '   ';
-    } else if (event.code === 'Backspace' || event.code === 'Delete') {
-      textarea.value = textarea.value.slice(0, -1);
-    } else if (event.code === 'Enter') {
-      textarea.value += '\n';
-    } else if (event.code === 'Space') {
-      textarea.value += ' ';
-    } else if (event.code === 'CapsLock') {
-      caps = !caps;
-      changeKeyboard();
-    } else if (event.altKey && event.ctrlKey) {
-      langEn = !langEn;
-      localStorage.setItem('langEn', langEn);
-      changeKeyboard();
-    } else if (event.key === 'Shift' && flag) {
-      caps = !caps;
-      changeKeyboard();
-      flag = false;
-    } else if (event.key === 'Control' || event.key === 'Alt' || event.key === 'Meta') {
-
+    if (controlsKey.find((el) => el === event.code)) {
+      if (event.code === 'Tab') {
+        textarea.value += '   ';
+      } else if (event.code === 'Backspace' || event.code === 'Delete') {
+        textarea.value = textarea.value.slice(0, -1);
+      } else if (event.code === 'Enter') {
+        textarea.value += '\n';
+      } else if (event.code === 'Space') {
+        textarea.value += ' ';
+      } else if (event.code === 'CapsLock') {
+        caps = !caps;
+        changeKeyboard();
+      } else if (event.altKey && event.ctrlKey) {
+        langEn = !langEn;
+        localStorage.setItem('langEn', langEn);
+        changeKeyboard();
+      } else if (event.key === 'Shift' && flag) {
+        caps = !caps;
+        changeKeyboard();
+        flag = false;
+      } else if (event.code === 'ArrowLeft') {
+        textarea.selectionEnd -= 1;
+      } else if (event.code === 'ArrowRight') {
+        textarea.selectionStart += 1;
+      }
     } else {
       textarea.value += text;
       textarea.focus();
@@ -128,7 +135,7 @@ keyboard.querySelectorAll('.key').forEach((item) => {
         caps = !caps;
         changeKeyboard();
       }
-      if (text === 'Delete' || text === 'Backspace') {
+      if (text === 'Del' || text === 'Backspace') {
         textarea.value = textarea.value.slice(0, -1);
       }
       if (text === 'Enter') {
@@ -144,13 +151,17 @@ keyboard.querySelectorAll('.key').forEach((item) => {
       if (text === 'Tab') {
         textarea.value += '   ';
       }
+    } else if (text === '🠔') {
+      textarea.selectionEnd -= 1;
+    } else if (text === '🠖') {
+      textarea.selectionStart += 1;
     } else {
       textarea.value += item.innerHTML;
     }
   });
 
   item.addEventListener('mouseup', () => {
-    item.classList.remove('active');
+    keyboard.querySelectorAll('.key').forEach((items) => items.classList.remove('active'));
     textarea.focus();
   });
 });

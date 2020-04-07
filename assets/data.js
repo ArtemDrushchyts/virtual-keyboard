@@ -33,6 +33,10 @@ const ruCaps = [
   'Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', '🠕', 'Shift',
   'Ctrl', 'Win', 'Alt', 'Space', 'Alt', '🠔', '🠗', '🠖', 'Ctrl'];
 
+const controlsKey = ['Backquote', 'Backspace', 'Tab', 'Delete', 'CapsLock', 'Enter',
+  'ShiftLeft', 'ArrowUp', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space',
+  'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'];
+
 export {
-  keysCode, en, enCaps, ru, ruCaps,
+  keysCode, en, enCaps, ru, ruCaps, controlsKey,
 };
